@@ -36,6 +36,7 @@ class PHPExcel_Chart_Axis extends PHPExcel_Chart_Properties
         'horizontal_crosses' => self::HORIZONTAL_CROSSES_AUTOZERO,
         'horizontal_crosses_value' => null,
         'label_skip_interval' => null,
+        'tick_skip_interval' => null,
     );
 
     /**
@@ -184,7 +185,6 @@ class PHPExcel_Chart_Axis extends PHPExcel_Chart_Properties
         ($horizontal_crosses !== null) ? $this->axisOptions['horizontal_crosses'] = (string) $horizontal_crosses : null;
         ($axis_orientation !== null) ? $this->axisOptions['orientation'] = (string) $axis_orientation : null;
         ($major_tmt !== null) ? $this->axisOptions['major_tick_mark'] = (string) $major_tmt : null;
-        ($minor_tmt !== null) ? $this->axisOptions['minor_tick_mark'] = (string) $minor_tmt : null;
         ($minor_tmt !== null) ? $this->axisOptions['minor_tick_mark'] = (string) $minor_tmt : null;
         ($minimum !== null) ? $this->axisOptions['minimum'] = (string) $minimum : null;
         ($maximum !== null) ? $this->axisOptions['maximum'] = (string) $maximum : null;
@@ -561,6 +561,27 @@ class PHPExcel_Chart_Axis extends PHPExcel_Chart_Properties
     }
 
     /**
+     * Set the axis skip tick interval. If <tt>null</tt>, will be set to auto.
+     *
+     * @param int|null $interval
+     */
+
+    public function setTickSkipInterval($interval)
+    {
+        $this->axisOptions['tick_skip_interval'] = $interval;
+    }
+
+    /**
+     * Get the Tick Skip Interval
+     *
+     * @return int|null
+     */
+    public function getTickSkipInterval()
+    {
+        return $this->axisOptions['tick_skip_interval'];
+    }
+
+    /**
      * Set the axis skip label interval. If <tt>null</tt>, will be set to auto.
      *
      * @param int|null $interval
@@ -580,4 +601,6 @@ class PHPExcel_Chart_Axis extends PHPExcel_Chart_Properties
     {
         return $this->axisOptions['label_skip_interval'];
     }
+
+
 }

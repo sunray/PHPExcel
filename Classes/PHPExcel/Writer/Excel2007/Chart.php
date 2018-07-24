@@ -497,6 +497,20 @@ class PHPExcel_Writer_Excel2007_Chart extends PHPExcel_Writer_Excel2007_WriterPa
         $objWriter->writeAttribute('val', $xAxis->getAxisOptionsProperty('axis_labels'));
         $objWriter->endElement();
 
+        $tickSkipInterval = $xAxis->getTickSkipInterval();
+        if ($tickSkipInterval !== null) {
+            $objWriter->startElement('c:tickMarkSkip');
+            $objWriter->writeAttribute('val', $tickSkipInterval);
+            $objWriter->endElement();
+        }
+
+        $labelSkipInterval = $xAxis->getLabelSkipInterval();
+        if ($labelSkipInterval !== null) {
+            $objWriter->startElement('c:tickLblSkip');
+            $objWriter->writeAttribute('val', $labelSkipInterval);
+            $objWriter->endElement();
+        }
+
         if ($id2 > 0) {
             $objWriter->startElement('c:crossAx');
             $objWriter->writeAttribute('val', $id2);
@@ -518,13 +532,6 @@ class PHPExcel_Writer_Excel2007_Chart extends PHPExcel_Writer_Excel2007_WriterPa
         $objWriter->startElement('c:lblOffset');
         $objWriter->writeAttribute('val', 100);
         $objWriter->endElement();
-
-        $labelSkipInterval = $xAxis->getLabelSkipInterval();
-        if ($labelSkipInterval !== null) {
-            $objWriter->startElement('c:tickLblSkip');
-            $objWriter->writeAttribute('val', $labelSkipInterval);
-            $objWriter->endElement();
-        }
 
         if ($isMultiLevelSeries) {
             $objWriter->startElement('c:noMultiLvlLbl');
