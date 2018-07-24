@@ -404,11 +404,22 @@ class PHPExcel_Writer_Excel2007_Chart extends PHPExcel_Writer_Excel2007_WriterPa
      * @param  string $id1
      * @param  string $id2
      * @param  boolean $isMultiLevelSeries
+     * @param PHPExcel_Chart_Axis $xAxis
+     * @param PHPExcel_Chart_Axis $yAxis
      *
      * @throws  PHPExcel_Writer_Exception
      */
-    private function writeCategoryAxis($objWriter, PHPExcel_Chart_PlotArea $plotArea, $xAxisLabel, $groupType, $id1, $id2, $isMultiLevelSeries, $xAxis, $yAxis)
-    {
+    private function writeCategoryAxis(
+        $objWriter,
+        PHPExcel_Chart_PlotArea $plotArea,
+        $xAxisLabel,
+        $groupType,
+        $id1,
+        $id2,
+        $isMultiLevelSeries,
+        PHPExcel_Chart_Axis $xAxis,
+        PHPExcel_Chart_Axis $yAxis
+    ) {
         $objWriter->startElement('c:catAx');
 
         if ($id1 > 0) {
@@ -419,7 +430,7 @@ class PHPExcel_Writer_Excel2007_Chart extends PHPExcel_Writer_Excel2007_WriterPa
 
         $objWriter->startElement('c:scaling');
         $objWriter->startElement('c:orientation');
-        $objWriter->writeAttribute('val', $yAxis->getAxisOptionsProperty('orientation'));
+        $objWriter->writeAttribute('val', $xAxis->getAxisOptionsProperty('orientation'));
         $objWriter->endElement();
         $objWriter->endElement();
 
@@ -470,20 +481,20 @@ class PHPExcel_Writer_Excel2007_Chart extends PHPExcel_Writer_Excel2007_WriterPa
         }
 
         $objWriter->startElement('c:numFmt');
-        $objWriter->writeAttribute('formatCode', $yAxis->getAxisNumberFormat());
-        $objWriter->writeAttribute('sourceLinked', $yAxis->getAxisNumberSourceLinked());
+        $objWriter->writeAttribute('formatCode', $xAxis->getAxisNumberFormat());
+        $objWriter->writeAttribute('sourceLinked', $xAxis->getAxisNumberSourceLinked());
         $objWriter->endElement();
 
         $objWriter->startElement('c:majorTickMark');
-        $objWriter->writeAttribute('val', $yAxis->getAxisOptionsProperty('major_tick_mark'));
+        $objWriter->writeAttribute('val', $xAxis->getAxisOptionsProperty('major_tick_mark'));
         $objWriter->endElement();
 
         $objWriter->startElement('c:minorTickMark');
-        $objWriter->writeAttribute('val', $yAxis->getAxisOptionsProperty('minor_tick_mark'));
+        $objWriter->writeAttribute('val', $xAxis->getAxisOptionsProperty('minor_tick_mark'));
         $objWriter->endElement();
 
         $objWriter->startElement('c:tickLblPos');
-        $objWriter->writeAttribute('val', $yAxis->getAxisOptionsProperty('axis_labels'));
+        $objWriter->writeAttribute('val', $xAxis->getAxisOptionsProperty('axis_labels'));
         $objWriter->endElement();
 
         if ($id2 > 0) {
@@ -492,7 +503,7 @@ class PHPExcel_Writer_Excel2007_Chart extends PHPExcel_Writer_Excel2007_WriterPa
             $objWriter->endElement();
 
             $objWriter->startElement('c:crosses');
-            $objWriter->writeAttribute('val', $yAxis->getAxisOptionsProperty('horizontal_crosses'));
+            $objWriter->writeAttribute('val', $xAxis->getAxisOptionsProperty('horizontal_crosses'));
             $objWriter->endElement();
         }
 
@@ -507,6 +518,13 @@ class PHPExcel_Writer_Excel2007_Chart extends PHPExcel_Writer_Excel2007_WriterPa
         $objWriter->startElement('c:lblOffset');
         $objWriter->writeAttribute('val', 100);
         $objWriter->endElement();
+
+        $labelSkipInterval = $xAxis->getLabelSkipInterval();
+        if ($labelSkipInterval !== null) {
+            $objWriter->startElement('c:tickLblSkip');
+            $objWriter->writeAttribute('val', $labelSkipInterval);
+            $objWriter->endElement();
+        }
 
         if ($isMultiLevelSeries) {
             $objWriter->startElement('c:noMultiLvlLbl');

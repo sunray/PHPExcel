@@ -34,7 +34,8 @@ class PHPExcel_Chart_Axis extends PHPExcel_Chart_Properties
         'major_tick_mark' => self::TICK_MARK_NONE,
         'axis_labels' => self::AXIS_LABELS_NEXT_TO,
         'horizontal_crosses' => self::HORIZONTAL_CROSSES_AUTOZERO,
-        'horizontal_crosses_value' => null
+        'horizontal_crosses_value' => null,
+        'label_skip_interval' => null,
     );
 
     /**
@@ -557,5 +558,26 @@ class PHPExcel_Chart_Axis extends PHPExcel_Chart_Properties
     public function getSoftEdgesSize()
     {
         return $this->softEdges['size'];
+    }
+
+    /**
+     * Set the axis skip label interval. If <tt>null</tt>, will be set to auto.
+     *
+     * @param int|null $interval
+     */
+
+    public function setLabelSkipInterval($interval)
+    {
+        $this->axisOptions['label_skip_interval'] = $interval;
+    }
+
+    /**
+     * Get the Label Skip Interval
+     *
+     * @return int|null
+     */
+    public function getLabelSkipInterval()
+    {
+        return $this->axisOptions['label_skip_interval'];
     }
 }

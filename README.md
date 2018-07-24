@@ -1,6 +1,6 @@
 # Sunray Modifications
 
-1.
+1. Adding `setLabelSkipInterval()` to the PHPExcel_Chart_Axis class which allows for setting interval spacing on an axis.
 
 
 ---
